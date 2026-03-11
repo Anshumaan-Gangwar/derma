@@ -1,24 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { loadState } from "../../load-initial-state";
 
 export interface COUNT {
-    count: number
+    majorIndex: number
 }
 
 
 const initialState: COUNT = {
-    count: 0
+    majorIndex: 0
 }
 
 const countSlice = createSlice({
-    name: "count",
+    name: "majorIndex",
     initialState,
     reducers: {
         increaseCount(state) {
-            state.count += 1;
+            state.majorIndex += 1;
         },
         decrementCount(state) {
-            state.count -= 1;
+            state.majorIndex -= 1;
         },
         initializeState(state, action: PayloadAction<COUNT>) {
             return action.payload;
@@ -28,4 +27,4 @@ const countSlice = createSlice({
 
 
 export default countSlice.reducer;
-export const { increaseCount, decrementCount,initializeState } = countSlice.actions;
+export const { increaseCount, decrementCount, initializeState } = countSlice.actions;

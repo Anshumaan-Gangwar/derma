@@ -1,15 +1,21 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import CountReducer, { COUNT } from "./features/count/index"
-import { persistMiddleware } from './middleware'
+
+// Reducers
+import CountReducer, { COUNT } from "./features/count/index";
+import personalInfoReducer from './features/personalInfo/index';
+import questionsReducer from './features/questions/index';
+
+import { persistMiddleware } from './middlewareAndReaders'
 
 const RootReducer = combineReducers({
-    count: CountReducer
+    count: CountReducer,
+    personalInfo: personalInfoReducer,
+    questions: questionsReducer
 })
 
-export const makeStore = (preloadedState?: Partial<RootState>) => {
+export const makeStore = () => {
     return configureStore({
         reducer: RootReducer,
-        preloadedState,
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(persistMiddleware)
     })
 }
