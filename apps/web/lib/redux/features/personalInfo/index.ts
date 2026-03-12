@@ -1,45 +1,51 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-enum Gender {
-    MALE, FEMALE, OTHERS
+export enum Gender {
+    MALE = "MALE",
+    FEMALE = "FEMALE",
+    OTHERS = "OTHERS"
 }
 
 export interface CustomerPersonalInfo {
     name: string,
     phone: string,
-    age: string,
-    gender: Gender
+    age: number | undefined,
+    gender: Gender | undefined
 }
 
 const initialState: CustomerPersonalInfo = {
     name: "",
     phone: "",
-    age: "",
-    gender: Gender.MALE
+    age: undefined,
+    gender: undefined
 }
 
 export const personalInfoSlice = createSlice({
     name: "personalInfo",
     initialState,
     reducers: {
-        updateName(state, action: PayloadAction<string>) {
+        updateNameReducer(state, action: PayloadAction<string>) {
             state.name = action.payload;
         },
-        updatePhone(state, action: PayloadAction<string>) {
+        updatePhoneReducer(state, action: PayloadAction<string>) {
             state.phone = action.payload;
         },
-        updateAge(state, action: PayloadAction<string>) {
+        updateAgeReducer(state, action: PayloadAction<number | undefined>) {
             state.age = action.payload;
         },
-        updateGender(state, action: PayloadAction<Gender>) {
+        updateGenderReducer(state, action: PayloadAction<Gender | undefined>) {
             state.gender = action.payload;
         },
         clearPersonalInfo() {
             return initialState;
+        },
+        initializePersonalInfoReducer(state, action: PayloadAction<CustomerPersonalInfo | null>) {
+            if(!action.payload) return initialState;
+            return action.payload;
         }
     }
 })
 
 
 export default personalInfoSlice.reducer;
-export const { } = personalInfoSlice.actions;
+export const { updateAgeReducer, updateGenderReducer, updateNameReducer, updatePhoneReducer, clearPersonalInfo,initializePersonalInfoReducer } = personalInfoSlice.actions;

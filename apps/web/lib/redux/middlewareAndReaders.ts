@@ -2,6 +2,7 @@
 
 import { isAction, Middleware } from "@reduxjs/toolkit";
 import { RootState } from "./store";
+import { CustomerPersonalInfo } from "./features/personalInfo";
 
 // defining Some Contant
 const MAJOR_INDEX_PREFIX = "derma-current-major-index";
@@ -14,7 +15,7 @@ export const persistMiddleware: Middleware<{}, RootState> = (store) => (next) =>
 
     // trigger when there's a change in major Index state
     if (isAction(action) && action.type.startsWith("majorIndex")) {
-        const majorIndexState = store.getState().count;
+        const majorIndexState = store.getState().majorIndex;
         sessionStorage.setItem(MAJOR_INDEX_PREFIX, JSON.stringify(majorIndexState))
     }
 
@@ -38,3 +39,18 @@ export const persistMiddleware: Middleware<{}, RootState> = (store) => (next) =>
 
 //***************************************************************************************************************************************************** */
 // Defining The Readers
+export const readPersonalInfo = () => {
+    const item = sessionStorage.getItem(PERSONAL_INFO_PREFIX);
+
+    if (!item) return null;
+
+    try {
+        const res = JSON.parse(item) as CustomerPersonalInfo;
+        return res;
+    }
+    catch (error) {
+        console.error('Error Parshing the Personal INfo');
+        sessionStorage.removeItem(PERSONAL_INFO_PREFIX);
+        return null;
+    }
+}

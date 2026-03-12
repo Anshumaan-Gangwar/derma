@@ -1,5 +1,5 @@
 {
-  "name": "zod",
+  "name": "@repo/zod",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,7 +11,7 @@
     "zod": "^4.3.6"
   },
   "exports":{
-      "personal-info":"./src/personal-info"
+      "./personal-info":"./src/personal-info/index.ts"
   },
   "keywords": [],
   "author": "",

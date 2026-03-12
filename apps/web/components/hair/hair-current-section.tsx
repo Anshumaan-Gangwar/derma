@@ -1,6 +1,6 @@
 export const CurrentHairSection = () => {
   return (
-    <div className="flex items-center justify-center mt-5! [&_div]:border-[#25544C] [&_div]:flex [&_div]:justify-center [&_div]:items-center [&_div]:font-bold [&_div]:text-[#25544C]">
+    <div className="flex items-center justify-center my-5! [&_div]:border-[#25544C] [&_div]:flex [&_div]:justify-center [&_div]:items-center [&_div]:font-bold [&_div]:text-[#25544C]">
       
       {/* Step 1 */}
       <div className="relative h-[60px] w-[60px] rounded-full border-[3.5px] mr-1!">

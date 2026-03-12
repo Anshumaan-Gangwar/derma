@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export interface COUNT {
+export interface MajorIndex {
     majorIndex: number
 }
 
 
-const initialState: COUNT = {
+const initialState: MajorIndex = {
     majorIndex: 0
 }
 
@@ -19,7 +19,7 @@ const countSlice = createSlice({
         decrementCount(state) {
             state.majorIndex -= 1;
         },
-        initializeState(state, action: PayloadAction<COUNT>) {
+        initializeState(state, action: PayloadAction<MajorIndex>) {
             return action.payload;
         }
     }

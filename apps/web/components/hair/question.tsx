@@ -4,7 +4,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group"
 
 export const Question = () => {
     return <div className="mt-15! font-sans text-[#25544C]">
-        <h1 className="text-3xl font-bold mb-4!">Do you have a family history of hair loss ?</h1>
+        <h2 className="text-3xl font-bold mb-4!">Do you have a family history of hair loss ?</h2>
         <RadioGroup className="[&_label]:text-[17px] [&_div]:bg-[#A6D1CA4F] [&_div]:px-5! [&_div]:py-3! [&_div]:rounded-sm [&_button]:border-[#25544C] [&_button[data-state=checked]]:bg-[#25544C]">
             <div className="flex items-center gap-3">
                 <RadioGroupItem value="default" id="r1" />
@@ -23,7 +23,7 @@ export const Question = () => {
                 <Label htmlFor="r4">Mother or any from mother&apos;s side of the family</Label>
             </div>
         </RadioGroup>
-        <NavigationButton/>
+        <NavigationButton />
     </div>
 
 }
