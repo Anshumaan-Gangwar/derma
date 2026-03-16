@@ -1,10 +1,13 @@
+"use client";
 import { Phone, MapPin, Clock } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <section className="relative w-full px-4!">
       {/* ── Hero Card ── */}
-      <div className="relative bg-[#25544C] w-full rounded-4xl  px-10! py-16! flex flex-col gap-8 lg:h-135 overflow-hidden">
+      <div className="relative bg-[#25544C] w-full rounded-4xl  px-10! py-14! flex flex-col gap-8! lg:h-135 overflow-hidden">
         <Image
           src="/images/leaf.png"
           alt=""
@@ -45,10 +48,10 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-wrap gap-9">
-            <button className="text-[#25544C] bg-white font-(family-name:--font-subhead) text-lg px-8! py-2! rounded-full font-normal hover:bg-gray-100 transition active:scale-95">
+            <button onClick={() => router.push("/hair-test")} className="text-[#25544C] cursor-pointer bg-white font-(family-name:--font-subhead) text-lg px-8! py-2! rounded-full font-normal hover:bg-gray-200 transition active:scale-95">
               Take Hair Test
             </button>
-            <button className="text-[#25544C] bg-white font-(family-name:--font-subhead) px-8! text-lg py-2! rounded-full font-normal hover:bg-gray-100 transition active:scale-95">
+            <button onClick={() => router.push("/skin-test")} className="text-[#25544C] cursor-pointer bg-white font-(family-name:--font-subhead) px-8! text-lg py-2! rounded-full font-normal hover:bg-gray-200 transition active:scale-95">
               Take Skin Test
             </button>
           </div>
@@ -61,11 +64,11 @@ export default function HeroSection() {
             <Phone size={22} strokeWidth={1.5} />
           </div>
           <div className="space-y-1">
-            <h3 className="font-bold text-lg text-gray-800">Contact Us</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="font-bold text-lg font-(family-name:--font-subhead) text-[#25544C]">Contact Us</h3>
+            <p className="text-sm text-gray-500 font-(family-name:--font-subhead)">
               Email: info@dermatologistbareilly.in
             </p>
-            <p className="text-sm text-gray-500">Phone: +91-8077772817</p>
+            <p className="text-sm text-gray-500 font-(family-name:--font-subhead)">Phone: +91-8077772817</p>
           </div>
         </div>
 
@@ -74,8 +77,8 @@ export default function HeroSection() {
             <MapPin size={24} strokeWidth={1.5} />
           </div>
           <div className="space-y-1">
-            <h3 className="font-bold text-lg text-gray-800">Our Location</h3>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <h3 className="font-bold text-lg font-(family-name:--font-subhead) text-[#25544C]">Our Location</h3>
+            <p className="text-sm text-gray-500 leading-relaxed font-(family-name:--font-subhead)">
               Kaushik gastro and skin centre, 112/3, Civil Lines, near
               Siddhivinayak hospital, Bareilly, UP
             </p>
@@ -87,11 +90,11 @@ export default function HeroSection() {
             <Clock size={24} strokeWidth={1.5} />
           </div>
           <div className="space-y-1">
-            <h3 className="font-bold text-lg text-gray-800">Working Hours</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="font-bold text-lg font-(family-name:--font-subhead) text-[#25544C]">Working Hours</h3>
+            <p className="text-sm text-gray-500   font-(family-name:--font-subhead)">
               Monday–Friday: 9:00 am to 5:00 pm
             </p>
-            <p className="text-sm text-gray-400 italic">
+            <p className="text-sm text-gray-500 font-(family-name:--font-subhead)">
               Weekends: Emergency only
             </p>
           </div>

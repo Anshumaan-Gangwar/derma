@@ -2,116 +2,174 @@
 
 import * as React from "react"
 import Link from "next/link"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+import { usePathname } from "next/navigation"
+import { ChevronRight, ChevronDown } from "lucide-react"
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact Us", href: "/contact" },
 ]
 
-export function NavigationMenuDemo() {
-  return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="w-96">
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built with Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem className="hidden md:flex">
-          <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/docs">Docs</Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
-  )
-}
+const serviceLinks = [
+  { title: "Skin Test", href: "/skin/personal-form", description: "Take a skin test to get personalized recommendations." },
+  { title: "Hair Test", href: "/hair-test", description: "Take a hair test to get personalized recommendations." },
+]
 
-function ListItem({
-  title,
-  children,
-  href,
-  ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+export default function Header() {
+  const pathname = usePathname()
+  const [servicesOpen, setServicesOpen] = React.useState(false)
+  const [indicatorStyle, setIndicatorStyle] = React.useState({ left: 0, width: 0, opacity: 0 })
+  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null)
+  const navRef = React.useRef<HTMLDivElement>(null)
+  const itemRefs = React.useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([])
+
+  // All nav items: regular links + services trigger
+  const allLabels = [...navLinks.map(l => l.label), "Services"]
+
+  // Find which item is active by pathname
+  const getActiveIndex = () => {
+    const idx = navLinks.findIndex(l =>
+      l.href === "/" ? pathname === "/" : pathname.startsWith(l.href)
+    )
+    if (idx !== -1) return idx
+    if (serviceLinks.some(s => pathname.startsWith(s.href))) return navLinks.length // Services
+    return -1
+  }
+
+  const moveIndicatorTo = (el: HTMLElement | null) => {
+    if (!el || !navRef.current) return
+    const navRect = navRef.current.getBoundingClientRect()
+    const elRect = el.getBoundingClientRect()
+    setIndicatorStyle({
+      left: elRect.left - navRect.left,
+      width: elRect.width,
+      opacity: 1,
+    })
+  }
+
+  const resetIndicatorToActive = () => {
+    const activeIdx = getActiveIndex()
+    if (activeIdx !== -1) {
+      moveIndicatorTo(itemRefs.current[activeIdx] ?? null)
+    } else {
+      setIndicatorStyle(s => ({ ...s, opacity: 0 }))
+    }
+  }
+
+  // Set indicator to active link on mount and route change
+  React.useEffect(() => {
+    resetIndicatorToActive()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
+
   return (
-    <li {...props}>
-      <NavigationMenuLink asChild>
-        <Link href={href}>
-          <div className="flex flex-col gap-1 text-sm">
-            <div className="leading-none font-medium">{title}</div>
-            <div className="line-clamp-2 text-muted-foreground">{children}</div>
-          </div>
+    <header className="w-full border-b bg-white">
+      <div className="mx-auto ml-29! flex max-w-[1290px] items-center justify-between px-6! py-2!">
+
+        {/* LOGO */}
+        <Link href="/" className="text-2xl font-bold text-emerald-700 font-(family-name:--font-viga)">
+          XYZ
         </Link>
-      </NavigationMenuLink>
-    </li>
+
+        {/* NAVIGATION */}
+        <div className="flex justify-center ">
+          <nav
+            ref={navRef}
+            className="relative flex items-center gap-1"
+            onMouseLeave={() => { resetIndicatorToActive(); setHoveredIndex(null) }}
+          >
+
+            {/* Sliding box indicator */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-md bg-[#25544C] transition-all duration-300 ease-in-out"
+              style={{
+                left: indicatorStyle.left,
+                width: indicatorStyle.width,
+                height: "calc(100% - 8px)",
+                opacity: indicatorStyle.opacity,
+              }}
+            />
+
+            {/* Regular nav links */}
+            {navLinks.map((link, i) => {
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href)
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  ref={el => { itemRefs.current[i] = el }}
+                  onMouseEnter={e => { moveIndicatorTo(e.currentTarget); setHoveredIndex(i) }}
+                  className={`relative z-10 px-8! py-2! rounded-md font-(family-name:--font-viga) text-[18px] transition-colors duration-300 ${
+                    hoveredIndex === i
+                      ? "text-white!"
+                      : isActive
+                      ? "text-white!"
+                      : "text-[#25544C]"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
+
+            {/* Services dropdown */}
+            <div
+              className="relative"
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button
+                ref={el => { itemRefs.current[navLinks.length] = el }}
+                onMouseEnter={e => { moveIndicatorTo(e.currentTarget); setHoveredIndex(navLinks.length) }}
+                onClick={() => setServicesOpen(o => !o)}
+                className={`relative z-10 flex items-center gap-1 px-4! py-2! rounded-md font-(family-name:--font-viga) text-[18px] transition-colors duration-300 ${
+                  hoveredIndex === navLinks.length
+                    ? "text-[white]!"
+                    : serviceLinks.some(s => pathname.startsWith(s.href))
+                    ? "text-[white]"
+                    : "text-[#25544C]!"
+                }`}
+              >
+                Services
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {servicesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-[260px] rounded-xl border bg-white shadow-lg p-2! z-50">
+                  {serviceLinks.map(s => (
+                    <Link
+                      key={s.href}
+                      href={s.href}
+                      onClick={() => setServicesOpen(false)}
+                      className="block rounded-lg px-4! py-3! hover:bg-[#25544C]/8 transition-colors"
+                    >
+                      <div className="font-semibold text-[#25544C] font-(family-name:--font-viga)">{s.title}</div>
+                      <p className="text-sm text-gray-500 mt-0.5">{s.description}</p>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </nav>
+        </div>
+
+        {/* BUTTON */}
+        <div className="flex justify-end">
+          <Link
+            href="/appointment"
+            className="text-white! cursor-pointer rounded-full flex font-(family-name:--font-viga) bg-[#25544C] px-7! py-2! font-medium hover:bg-[#1f453f] transition text-[17px]"
+          >
+            Book Appointment
+            <ChevronRight />
+          </Link>
+        </div>
+
+      </div>
+    </header>
   )
 }

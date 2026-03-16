@@ -4,8 +4,16 @@ import "./globals.css";
 import { Raleway } from "next/font/google";
 import { Lato } from "next/font/google";
 import { Viga } from "next/font/google";
-// import Header from "../components/common/header";
+import Header from "../components/common/header";
 import Footer from "../components/common/footer";
+import { Poppins } from "next/font/google";
+export const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+  style: ["normal", "italic"],
+  variable: "--font-poppins",
+});
 export const lato = Lato({
   subsets: ["latin"],
   weight: ["300", "400", "700"],
@@ -44,10 +52,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} ${lato.variable} ${viga.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} ${lato.variable} ${viga.variable} ${poppins.variable}`}
       >
         <div className="relative flex flex-col min-h-screen">
-          {/* <Header /> */}
+          <Header />
           <main className="flex-1">{children}</main>
           <Footer />
         </div>

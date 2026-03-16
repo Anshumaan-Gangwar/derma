@@ -26,11 +26,11 @@ const services: Service[] = [
 
 export default function Services() {
   return (
-    <section className="bg-gray-50 py-9! px-45!">
+    <section className="bg-gray-50 py-16! px-45!">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="mb-10! flex flex-col justify-center items-center text-center gap-y-2">
-          <span className="text-gray-600/90 font-(family-name:--font-viga) text-[23px] font-semibold">
+          <span className="text-gray-600/90 font-(family-name:--font-viga) text-[23px] font-medium">
             Our Services
           </span>
           <h1 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold font-(family-name:--font-heading) text-[#25544C] mt-2 mb-4 leading-tight">

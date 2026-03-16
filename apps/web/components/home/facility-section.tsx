@@ -19,7 +19,7 @@ const image =[
 
 export default function FacilitySection() {
   return (
-    <section className="w-full py-18! items-center">
+    <section className="w-full py-7! items-center">
       {/* Main content */}
       <div className="max-w-8xl mx-auto sm:px-6 lg:px-30! lg:py-6!">
         <div className="flex flex-col lg:flex-row items-center  gap-10 lg:gap-60">
@@ -61,11 +61,11 @@ export default function FacilitySection() {
             </p>
 
             {/* Feature list */}
-            <ul className="flex flex-col gap-6 mt-2!">
+            <ul className="flex flex-col gap-6! mt-2!">
               {features.map((feature) => (
                 <li
                   key={feature}
-                  className="flex items-center gap-3 font-(family-name:--font-subhead) text-gray-500 text-sm sm:text-base justify-center lg:justify-start lg:text-[18px]"
+                  className="flex items-center gap-3! font-(family-name:--font-subhead) text-gray-500 text-sm sm:text-base justify-center lg:justify-start lg:text-[18px]"
                 >
                   <Image
                     src="/icons/image.png"
@@ -90,11 +90,11 @@ export default function FacilitySection() {
         </div>
 </div>
         <div className="w-full pt-14! flex items-center justify-center">
-  <div className="max-w-6xl mx-auto flex justify-between items-center px-6 w-full">
+  <div className="max-w-6xl mx-auto flex justify-between items-center px-6! w-full">
 
     {stats.map((stat, index) => (
         
-      <div key={index} className="flex items-center gap-4">
+      <div key={index} className="flex items-center gap-4!">
 
         <Image
         src={stat.images}
@@ -105,10 +105,10 @@ export default function FacilitySection() {
         </Image>
 
         <div>
-          <h3 className="text-4xl font-semibold text-green-900">
+          <h3 className="text-4xl font-(family-name:--font-subhead) font-semibold text-green-900">
             {stat.value}
           </h3>
-          <p className="text-[18px] text-gray-500">
+          <p className="text-[18px] font-(family-name:--font-subhead) text-gray-500">
             {stat.label}
           </p>
         </div>
