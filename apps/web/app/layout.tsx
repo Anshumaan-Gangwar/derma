@@ -7,6 +7,8 @@ import { Viga } from "next/font/google";
 import Header from "../components/common/header";
 import Footer from "../components/common/footer";
 import { Poppins } from "next/font/google";
+import { Roboto } from "next/font/google";
+import {IBM_Plex_Sans,Montserrat} from "next/font/google";
 export const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "700"],
@@ -29,9 +31,30 @@ const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
 });
+const roboto=Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+  style: ["normal", "italic"],
+  variable: "--font-roboto",
+});
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
+});
+const IBM=IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+  style: ["normal", "italic"],
+  variable: "--font-ibm",
+});
+const montserrat=Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  display: "swap",
+  style: ["normal", "italic"],
+  variable: "--font-montserrat",
 });
 export const viga = Viga({
   subsets: ["latin"],
@@ -52,7 +75,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} ${lato.variable} ${viga.variable} ${poppins.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} ${lato.variable} ${viga.variable} ${poppins.variable}
+        ${roboto.variable} ${IBM.variable} ${montserrat.variable}`}
       >
         <div className="relative flex flex-col min-h-screen">
           <Header />

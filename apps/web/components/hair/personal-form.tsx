@@ -29,7 +29,7 @@ export const PersonalInfoForm = () => {
           <div className="flex flex-col gap-2">
             <Label
               htmlFor="name"
-              className="text-custom-1 font-bold text-lg md:text-[22px]"
+              className="text-custom-1 font-bold text-lg md:text-[22px] font-(family-name:--font-roboto)"
             >
               Hi there, can we get your name?
             </Label>
@@ -51,7 +51,7 @@ export const PersonalInfoForm = () => {
           <div className="flex flex-col gap-2">
             <Label
               htmlFor="phone"
-              className="text-custom-1 font-bold text-lg md:text-[22px]"
+              className="text-custom-1 font-bold text-lg md:text-[21px] font-(family-name:--font-roboto)"
             >
               Phone Number
             </Label>
@@ -73,7 +73,7 @@ export const PersonalInfoForm = () => {
           <div className="flex flex-col gap-2">
             <Label
               htmlFor="age"
-              className="text-custom-1 font-bold text-lg md:text-[22px]"
+              className="text-custom-1 font-bold text-lg md:text-[21px] font-(family-name:--font-roboto)"
             >
               Age
             </Label>
@@ -103,7 +103,7 @@ export const PersonalInfoForm = () => {
           <div className="flex flex-col gap-2">
             <Label
               htmlFor="gender"
-              className="text-custom-1 font-bold text-lg md:text-[22px]"
+              className="text-custom-1 font-bold text-lg md:text-[21px] font-(family-name:--font-roboto)"
             >
               Gender
             </Label>

@@ -11,30 +11,77 @@ type Blog = {
   title: string;
   desc: string;
   image: string;
+  date:string;
 }
 
 const posts: Blog[] = [
   {
     id: 1,
-    category: "Hair Care",
+    category: "Hair",
     title: "Signs of Damaged Hair",
     desc: "Learn how to identify the early signs of hair damage and what you can do to restore its health.",
-    image: "/hair-damage.jpg", // Replace with your assets
+    image: "/images/hair.png", // Replace with your assets
+    date:"12 Dec 2024",
   },
   {
     id: 2,
     category: "Anti-Aging",
     title: "Microneedling for Hair Growth",
     desc: "Discover the science behind microneedling and how it stimulates hair follicles for better density.",
-    image: "/microneedling.jpg",
+    image: "/images/image copy.png",
+    date:"",
+  },
+  {
+    id: 3,
+    category: "Skincare",
+    title: "Signs of Damaged skin",
+    desc: "Learn how to identify the early signs of hair damage and what you can do to restore its health.",
+    image: "/images/skin.png", // Replace with your assets
+    date:"",
+  },
+  {
+    id: 4,
+    category: "Anti-Aging",
+    title: "Microneedling for Hair Growth",
+    desc: "Discover the science behind microneedling and how it stimulates hair follicles for better density.",
+    image: "/images/sub2.png",
+    date:"",
+  },
+  {
+    id: 5,
+    category: "Hair",
+    title: "Signs of Damaged Hair",
+    desc: "Learn how to identify the early signs of hair damage and what you can do to restore its health.",
+    image: "/images/sub1.png", // Replace with your assets
+    date:"",
+  },
+  {
+    id: 6,
+    category: "Anti-Aging",
+    title: "Skin problems",
+    desc: "Discover the science behind microneedling and how it stimulates hair follicles for better density.",
+    image: "/images/image.png",
+    date:"",
   },
   // Add more posts as needed
 ]
 
 
+
 export default function BlogPage() {
   const [search,setSearch] = React.useState("")
-  const filteredPosts = posts.filter((post) => post.title.toLowerCase().includes(search.toLowerCase()))
+  const [activeCategory,setActiveCategory] = React.useState("All");
+  const filteredPosts = posts.filter((post) => {
+    const matchTitle = post.title.toLowerCase().includes(search.toLowerCase());
+    const matchCategory = activeCategory === "All" || post.category === activeCategory;
+    return matchTitle && matchCategory;
+  })
+  const latestPost=filteredPosts[0]
+  const otherPosts=filteredPosts.slice(1)
+  
+  const filteredPostsByCategory = activeCategory === "All"
+    ? posts
+    : posts.filter(post => post.category === activeCategory);
   return (
     <div className="min-h-screen text-[#1D423E]">
       {/* HERO SECTION */}
@@ -44,7 +91,7 @@ export default function BlogPage() {
             alt="Dermatology treatment" 
             height={500}
             width={800}
-            className="absolute right-0 top-0 [mask-image:linear-gradient(to_left,black_70%,transparent)]"
+            className="absolute right-29 top-0 [mask-image:linear-gradient(to_left,black_70%,transparent)]"
           />
         <div className="container mx-auto px-6! lg:px-20! relative z-10">
           <div className="max-w-xl">
@@ -74,14 +121,15 @@ export default function BlogPage() {
       <div className="container mx-auto px-6! lg:px-20! mt-8! relative z-20!">
         <div className="bg-[#dce0ea] backdrop-blur-md p-4! rounded-xl shadow-sm border border-gray-100 flex flex-wrap items-center justify-between gap-4!">
           <div className="flex gap-2!">
-            {categories.map((cat) => (
+            {categories.map((category) => (
               <button 
-                key={cat}
+                key={category}
+                onClick={() => setActiveCategory(category)}
                 className={`px-6! cursor-pointer py-2! rounded-full text-[15px] font-(family-name:--font-poppins) font-medium transition ${
-                  cat === "All" ? "bg-[#25544C] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  category === activeCategory ? "bg-[#25544C] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                 }`}
               >
-                {cat}
+                {category}
               </button>
             ))}
           </div>
@@ -99,47 +147,105 @@ export default function BlogPage() {
       </div>
 
       {/* RECENT BLOGS GRID */}
-      <section className="container mx-auto px-6! lg:px-20 py-16!">
-        <h2 className="text-3xl font-(family-name:--font-poppins) font-semibold mb-10!">Recent Blogs</h2>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8!">
-          
-          {/* Main Featured Card (Spans 2 columns) */}
-          <div className="lg:col-span-2 group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
-            <div className="relative h-80 overflow-hidden">
-              <img src="/hairfall-science.jpg" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="Science" />
-              <span className="absolute top-4 left-4 bg-[#C5A67C] text-white text-xs px-3 py-1 rounded-md uppercase tracking-wider">Featured</span>
-            </div>
-            <div className="p-8!">
-              <h3 className="text-3xl font-serif mb-4!">The Science Behind Hairfall</h3>
-              <p className="text-gray-600 mb-6!">Learn the main causes of hairfall and how dermatologists recommend treating it with evidence-based solutions.</p>
-              <div className="flex items-center justify-between border-t pt-6!">
-                <span className="text-sm text-gray-400">March 12 — 5 min read</span>
-                <button className="flex items-center gap-!2 font-semibold text-[#25544C] group-hover:gap-3 transition-all">
-                  Read More <ArrowRight size={18} />
-                </button>
-              </div>
-            </div>
-          </div>
+     <section className="container mx-auto px-6! lg:px-20 py-16!">
 
-          {/* Side Column Cards */}
-          <div className="flex flex-col gap-8!">
-            {filteredPosts.map((post,index) => (
-              <div key={index} className="group cursor-pointer bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                <div className="h-48 overflow-hidden">
-                   <img src={post.image} className="w-full h-full object-cover group-hover:scale-105 transition-all" alt={post.title} />
-                </div>
-                <div className="p-6!">
-                  <span className="text-xs font-bold text-[#C5A67C] uppercase tracking-widest">{post.category}</span>
-                  <h4 className="text-xl font-serif mt-2! mb-3!">{post.title}</h4>
-                  <p className="text-gray-600 mb-6!">{post.desc}</p>
-                  <button className="text-sm font-semibold flex items-center gap-1!">Read More <ArrowRight size={14}/></button>
-                </div>
-              </div>
-            ))}
-          </div>
+
+  {/* Latest Post */}
+  {latestPost && (
+  <div className="group max-w-[500px] border-b-gray-400 rounded-3xl overflow-hidden 
+  border border-[#E8F0ED] shadow-sm hover:shadow-xl transition-all duration-500 mb-14!">
+
+    {/* Image */}
+    <div className="relative overflow-hidden">
+      <Image
+        src={latestPost.image}
+        alt={latestPost.title}
+        width={500}
+        height={320}
+        className="w-full h-[280px] object-cover group-hover:scale-105 transition-transform duration-700"
+      />
+
+      <span className="absolute top-4 left-4 bg-[#25544C] font-(family-name:--font-poppins) text-white text-xs px-3! py-1! 
+      rounded-full font-semibold tracking-wide">
+        Latest
+      </span>
+    </div>
+
+    <div className="p-6!">
+
+      <span className="text-[17px] font-bold font-(family-name:--font-subhead) text-[#C5A67C] uppercase tracking-widest">
+        {latestPost.category}
+      </span>
+
+      <h3 className="text-[30px] mt-2! mb-3! font-bold text-[#25544C] leading-snug font-(family-name:--font-heading)">
+        {latestPost.title}
+      </h3>
+
+      <p className="text-[#4B6B66] font-(family-name:--font-subhead) font-medium text-[18px] leading-relaxed mb-6!">
+        {latestPost.desc}
+      </p>
+
+      <div className="flex items-center justify-between border-t border-[#EEF3F2] ">
+
+        <span className="text-sm font-(family-name:--font-poppins) text-gray-400">
+          {latestPost.date}
+        </span>
+
+        <button className="flex items-center gap-2 text-[#25544C] font-(family-name:--font-poppins) font-semibold
+         transition-all duration-300">
+          Read More
+          <ArrowRight className="group-hover:translate-x-1 transition-all duration-300" size={18} />
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+)}
+
+  {/* Other Posts Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8!">
+    
+    {otherPosts.map((post, index) => (
+      <div
+        key={index}
+        className="group rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+      >
+
+        <div className="h-48 overflow-hidden">
+          <Image
+            src={post.image}
+            className="w-full h-full object-cover group-hover:scale-105 transition-all"
+            alt={post.title}
+            width={500}
+            height={500}
+          />
         </div>
-      </section>
+
+        <div className="p-6!">
+          <span className="text-xs font-(family-name:--font-subhead) font-bold text-[#C5A67C] uppercase tracking-widest">
+            {post.category}
+          </span>
+
+          <h4 className="text-xl font-bold font-(family-name:--font-heading) mt-2! mb-3!">
+            {post.title}
+          </h4>
+
+          <p className="text-gray-600 font-(family-name:--font-subhead) font-medium text-[15px] leading-relaxed mb-6!">
+            {post.desc}
+          </p>
+
+          <button className="text-sm font-semibold flex items-center gap-1 cursor-pointer font-(family-name:--font-poppins)">
+            Read More <ArrowRight className="group-hover:translate-x-1 transition-all duration-300" size={14} />
+          </button>
+        </div>
+
+      </div>
+    ))}
+
+  </div>
+
+</section>
       </div>
     </div>
   )

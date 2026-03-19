@@ -149,7 +149,7 @@ export default function Header() {
                       className="block rounded-lg px-4! py-3! hover:bg-[#25544C]/8 transition-colors"
                     >
                       <div className="font-semibold text-[#25544C] font-(family-name:--font-viga)">{s.title}</div>
-                      <p className="text-sm text-gray-500 mt-0.5">{s.description}</p>
+                      <p className="text-sm text-gray-500 mt-0.5 font-(family-name:--font-subhead)">{s.description}</p>
                     </Link>
                   ))}
                 </div>
